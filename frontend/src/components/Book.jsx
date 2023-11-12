@@ -1,10 +1,17 @@
-const Book = ({ title, author, year, isbn }) => {
+const Book = ({ title, author, year, isbn, handleDelete }) => {
   return (
-    <div>
-      <h1>{title}</h1>
-      <h2>{author}</h2>
-      <h3>{year}</h3>
-      <h4>{isbn}</h4>
+    <div
+      style={{
+        border: "1px solid black",
+        padding: "10px",
+        marginBottom: "10px",
+      }}
+    >
+      <h3>{title}</h3>
+      <p>{author}</p>
+      <p>{year}</p>
+      <p>{isbn}</p>
+      <button onClick={() => handleDelete(isbn)}>Delete</button>
     </div>
   );
 };
