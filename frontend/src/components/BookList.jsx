@@ -1,6 +1,6 @@
 import Book from "./Book";
 
-export const BookList = ({ books, handleDelete }) => {
+const BookList = ({ books, handleDelete }) => {
   return (
     <>
       {books.map((book) => (
@@ -11,3 +11,5 @@ export const BookList = ({ books, handleDelete }) => {
     </>
   );
 };
+
+export default BookList;
