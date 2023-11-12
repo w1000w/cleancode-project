@@ -32,7 +32,8 @@ function App() {
     });
   };
 
-  const handleAdd = () => {
+  const handleAdd = (event) => {
+    event.preventDefault();
     const newBook = {
       title: bookName,
       author: bookAuthor,
