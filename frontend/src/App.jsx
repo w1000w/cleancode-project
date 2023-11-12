@@ -1,10 +1,19 @@
+import { useState, useEffect } from "react";
 import { BookList } from "./components/BookList";
-import dummyBooks from "../data";
+import bookService from "./services/books";
 
 function App() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    bookService.getAll().then((initialBooks) => {
+      setBooks(initialBooks);
+    });
+  }, []);
+
   return (
     <>
-      <BookList books={dummyBooks} />
+      <BookList books={books} />
     </>
   );
 }
