@@ -11,4 +11,9 @@ const deleteBook = (id) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, deleteBook };
+const addBook = (newBook) => {
+  const request = axios.post(baseUrl, newBook);
+  return request.then((response) => response.data);
+};
+
+export default { getAll, deleteBook, addBook };
