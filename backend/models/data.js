@@ -31,17 +31,24 @@ const books = [
   },
 ];
 
-function addBook(book) {
-  book.isbn = book.isbn.replace(/-/g, ""); // remove all dashes from the ISBN
-  books.push(book);
+function addBook(newBook) {
+  newBook.isbn = removeIsbnHyphens(book.isbn);
+
+  const existingBook = books.find((book) => book.isbn === newBook.isbn);
+  if (existingBook) {
+    throw new Error("ISBN already exists");
+  }
+
+  books.push(newBook);
 }
 
 function removeBook(isbn) {
-  isbn = isbn.replace(/-/g, ""); // remove all dashes from the ISBN
+  isbn = removeIsbnHyphens(isbn);
   const index = books.findIndex((book) => book.isbn === isbn);
-  if (index !== -1) {
-    books.splice(index, 1);
+  if (index === -1) {
+    throw new Error("Book not found");
   }
+  books.splice(index, 1);
 }
 
 function getAllBooks() {
@@ -53,3 +60,7 @@ module.exports = {
   removeBook,
   getAllBooks,
 };
+
+function removeIsbnHyphens(isbn) {
+  return isbn.replace(/-/g, "");
+}
