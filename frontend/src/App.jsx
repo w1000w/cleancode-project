@@ -26,13 +26,16 @@ function App() {
     setBookIsbn(event.target.value);
   };
 
-  const handleDelete = (isbn) => {
-    bookService.deleteBook(isbn).then(() => {
-      setBooks(books.filter((book) => book.isbn !== isbn));
-    });
+  const handleDelete = async (id) => {
+    try {
+      await bookService.deleteBook(id);
+      setBooks(books.filter((book) => book.id !== id));
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
   };
 
-  const handleAdd = (event) => {
+  const handleAdd = async (event) => {
     event.preventDefault();
     const newBook = {
       title: bookName,
@@ -40,9 +43,30 @@ function App() {
       year: bookYear,
       isbn: bookIsbn,
     };
-    bookService.addBook(newBook).then((returnedBook) => {
+    try {
+      const returnedBook = await bookService.addBook(newBook);
       setBooks([...books, returnedBook]);
-    });
+      setBookName("");
+      setBookAuthor("");
+      setBookYear("");
+      setBookIsbn("");
+    } catch (error) {
+      console.error("Error adding book:", error);
+    }
+  };
+
+  const handleUpdate = async (updatedBook) => {
+    try {
+      const returnedBook = await bookService.updateBook(
+        updatedBook.id,
+        updatedBook
+      );
+      setBooks(
+        books.map((book) => (book.id !== returnedBook.id ? book : returnedBook))
+      );
+    } catch (error) {
+      console.error("Error updating book:", error);
+    }
   };
 
   useEffect(() => {
@@ -66,7 +90,11 @@ function App() {
         bookYear={bookYear}
         bookIsbn={bookIsbn}
       />
-      <BookList books={books} handleDelete={handleDelete} />
+      <BookList
+        books={books}
+        handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
+      />
     </>
   );
 }

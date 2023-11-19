@@ -2,7 +2,7 @@ import Book from "./Book";
 
 import { useState } from "react";
 
-const BookList = ({ books, handleDelete }) => {
+const BookList = ({ books, handleDelete, handleUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
@@ -15,7 +15,7 @@ const BookList = ({ books, handleDelete }) => {
 
   return (
     <>
-      <h2>Filter</h2>
+      <h2>Filter by Title</h2>
       <input
         type="text"
         placeholder="Search books..."
@@ -27,8 +27,12 @@ const BookList = ({ books, handleDelete }) => {
         <p>No books found</p>
       ) : (
         filteredBooks.map((book) => (
-          <div key={book.isbn}>
-            <Book {...book} handleDelete={handleDelete} />
+          <div key={book.id}>
+            <Book
+              {...book}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+            />
           </div>
         ))
       )}

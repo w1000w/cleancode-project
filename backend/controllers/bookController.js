@@ -19,11 +19,11 @@ const addBook = (req, res) => {
   }
 };
 
-const removeBook = (req, res) => {
+const deleteBook = (req, res) => {
   try {
-    const isbn = req.params.isbn;
-    books.removeBook(isbn);
-    res.status(204).send();
+    const id = req.params.id;
+    books.deleteBook(id);
+    res.status(200).send();
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -31,10 +31,10 @@ const removeBook = (req, res) => {
 
 const updateBook = (req, res) => {
   try {
-    const isbn = req.params.isbn;
+    const id = req.params.id;
     const book = req.body;
-    books.updateBook(isbn, book);
-    res.status(204).send();
+    const updatedBook = books.updateBook(id, book);
+    res.status(200).json(updatedBook);
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -43,5 +43,6 @@ const updateBook = (req, res) => {
 module.exports = {
   getAllBooks,
   addBook,
-  removeBook,
+  deleteBook,
+  updateBook,
 };

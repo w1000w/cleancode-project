@@ -16,4 +16,9 @@ const addBook = (newBook) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, deleteBook, addBook };
+const updateBook = (id, newBook) => {
+  const request = axios.put(`${baseUrl}/${id}`, newBook);
+  return request.then((response) => response.data);
+};
+
+export default { getAll, deleteBook, addBook, updateBook };
