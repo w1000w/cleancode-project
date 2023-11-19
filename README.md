@@ -1,5 +1,7 @@
 # README
 
+The project is a web application for managing physical book collections. Users can add, remove, and edit books in their collections and add condition and pricing related information.
+
 ## Setup
 
 Install dependencies from both backend and frontend separately running the following command:
