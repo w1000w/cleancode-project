@@ -37,12 +37,19 @@ function App() {
 
   const handleAdd = async (event) => {
     event.preventDefault();
+    if (!bookName || !bookAuthor || !bookYear) {
+      /* ISBN is not checked as older books don't have ISBN numbers */
+      console.error("Error adding book: One or more fields are empty");
+      return;
+    }
+
     const newBook = {
       title: bookName,
       author: bookAuthor,
       year: bookYear,
       isbn: bookIsbn,
     };
+
     try {
       const returnedBook = await bookService.addBook(newBook);
       setBooks([...books, returnedBook]);
@@ -56,6 +63,12 @@ function App() {
   };
 
   const handleUpdate = async (updatedBook) => {
+    if (!updatedBook.title || !updatedBook.author || !updatedBook.year) {
+      /* ISBN is not checked as older books don't have ISBN numbers */
+      console.error("Error updating book: One or more fields are empty");
+      return;
+    }
+
     try {
       const returnedBook = await bookService.updateBook(
         updatedBook.id,
