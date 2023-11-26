@@ -34,8 +34,8 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-    res.status(200).json({ message: "Login successful", token });
+    const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+    res.status(200).json({ message: "Login successful", access_token });
   } catch (error) {
     res.status(500).json({ error });
   }
