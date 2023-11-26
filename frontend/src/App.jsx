@@ -5,25 +5,27 @@ import bookService from "./services/books";
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [bookName, setBookName] = useState("");
-  const [bookAuthor, setBookAuthor] = useState("");
-  const [bookYear, setBookYear] = useState("");
-  const [bookIsbn, setBookIsbn] = useState("");
 
-  const handleBookName = (event) => {
-    setBookName(event.target.value);
-  };
+  const handleAdd = async ({ author, title, year, isbn }) => {
+    if (!author || !title || !year) {
+      /* ISBN is not checked as older books don't have ISBN numbers */
+      console.error("Error adding book: One or more fields are empty");
+      return;
+    }
 
-  const handleBookAuthor = (event) => {
-    setBookAuthor(event.target.value);
-  };
+    const newBook = {
+      title,
+      author,
+      year,
+      isbn,
+    };
 
-  const handleBookYear = (event) => {
-    setBookYear(event.target.value);
-  };
-
-  const handleBookIsbn = (event) => {
-    setBookIsbn(event.target.value);
+    try {
+      const returnedBook = await bookService.addBook(newBook);
+      setBooks([...books, returnedBook]);
+    } catch (error) {
+      console.error("Error adding book:", error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -35,47 +37,21 @@ function App() {
     }
   };
 
-  const handleAdd = async (event) => {
-    event.preventDefault();
-    if (!bookName || !bookAuthor || !bookYear) {
-      /* ISBN is not checked as older books don't have ISBN numbers */
-      console.error("Error adding book: One or more fields are empty");
-      return;
-    }
-
-    const newBook = {
-      title: bookName,
-      author: bookAuthor,
-      year: bookYear,
-      isbn: bookIsbn,
-    };
-
-    try {
-      const returnedBook = await bookService.addBook(newBook);
-      setBooks([...books, returnedBook]);
-      setBookName("");
-      setBookAuthor("");
-      setBookYear("");
-      setBookIsbn("");
-    } catch (error) {
-      console.error("Error adding book:", error);
-    }
-  };
-
-  const handleUpdate = async (updatedBook) => {
-    if (!updatedBook.title || !updatedBook.author || !updatedBook.year) {
+  const handleUpdate = async (bookToUpdate) => {
+    if (!bookToUpdate.title || !bookToUpdate.author || !bookToUpdate.year) {
       /* ISBN is not checked as older books don't have ISBN numbers */
       console.error("Error updating book: One or more fields are empty");
       return;
     }
-
     try {
-      const returnedBook = await bookService.updateBook(
-        updatedBook.id,
-        updatedBook
+      const updatedBook = await bookService.updateBook(
+        bookToUpdate.id,
+        bookToUpdate
       );
       setBooks(
-        books.map((book) => (book.id !== returnedBook.id ? book : returnedBook))
+        books.map((book) =>
+          book.id === updatedBook.id ? { ...updatedBook } : book
+        )
       );
     } catch (error) {
       console.error("Error updating book:", error);
@@ -88,21 +64,15 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(books);
+  }, [books]);
+
   return (
     <>
       <h1>Books</h1>
       <h2>Add a book</h2>
-      <BookForm
-        handleAdd={handleAdd}
-        handleBookName={handleBookName}
-        handleBookAuthor={handleBookAuthor}
-        handleBookYear={handleBookYear}
-        handleBookIsbn={handleBookIsbn}
-        bookName={bookName}
-        bookAuthor={bookAuthor}
-        bookYear={bookYear}
-        bookIsbn={bookIsbn}
-      />
+      <BookForm handleAdd={handleAdd} />
       <BookList
         books={books}
         handleDelete={handleDelete}

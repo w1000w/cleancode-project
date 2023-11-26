@@ -1,5 +1,4 @@
 import Book from "./Book";
-
 import { useState } from "react";
 
 const BookList = ({ books, handleDelete, handleUpdate }) => {
