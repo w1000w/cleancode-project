@@ -1,4 +1,4 @@
-const books = require("../models/data");
+const books = require("../models/bookModel");
 
 const getAllBooks = (req, res) => {
   try {
