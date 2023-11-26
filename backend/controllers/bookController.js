@@ -1,24 +1,48 @@
 const books = require("../models/data");
 
 const getAllBooks = (req, res) => {
-  const allBooks = books.getAllBooks();
-  res.status(200).json(allBooks);
+  try {
+    const allBooks = books.getAllBooks();
+    res.status(200).json(allBooks);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const addBook = (req, res) => {
-  const book = req.body;
-  books.addBook(book);
-  res.status(201).json(book);
+  try {
+    const book = req.body;
+    books.addBook(book);
+    res.status(201).json(book);
+  } catch (error) {
+    res.status(409).json({ error });
+  }
 };
 
-const removeBook = (req, res) => {
-  const isbn = req.params.isbn;
-  books.removeBook(isbn);
-  res.status(204).send();
+const deleteBook = (req, res) => {
+  try {
+    const id = req.params.id;
+    books.deleteBook(id);
+    res.status(200).send();
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
+const updateBook = (req, res) => {
+  try {
+    const id = req.params.id;
+    const book = req.body;
+    const updatedBook = books.updateBook(id, book);
+    res.status(200).json(updatedBook);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 module.exports = {
   getAllBooks,
   addBook,
-  removeBook,
+  deleteBook,
+  updateBook,
 };

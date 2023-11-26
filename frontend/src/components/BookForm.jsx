@@ -1,16 +1,44 @@
-const BookForm = ({
-  handleAdd,
-  handleBookName,
-  handleBookAuthor,
-  handleBookYear,
-  handleBookIsbn,
-  bookName,
-  bookAuthor,
-  bookYear,
-  bookIsbn,
-}) => {
+import { useState } from "react";
+import bookService from "../services/books";
+
+const BookForm = ({ handleAdd }) => {
+  const [bookName, setBookName] = useState("");
+  const [bookAuthor, setBookAuthor] = useState("");
+  const [bookYear, setBookYear] = useState("");
+  const [bookIsbn, setBookIsbn] = useState("");
+
+  const handleBookName = (event) => {
+    setBookName(event.target.value);
+  };
+
+  const handleBookAuthor = (event) => {
+    setBookAuthor(event.target.value);
+  };
+
+  const handleBookYear = (event) => {
+    setBookYear(event.target.value);
+  };
+
+  const handleBookIsbn = (event) => {
+    setBookIsbn(event.target.value);
+  };
+
+  const addNewBook = async (event) => {
+    event.preventDefault();
+    await handleAdd({
+      title: bookName,
+      author: bookAuthor,
+      year: bookYear,
+      isbn: bookIsbn,
+    });
+    setBookName("");
+    setBookAuthor("");
+    setBookYear("");
+    setBookIsbn("");
+  };
+
   return (
-    <form onSubmit={handleAdd}>
+    <form onSubmit={addNewBook}>
       <div>
         Title: <input value={bookName} onChange={handleBookName} />
       </div>

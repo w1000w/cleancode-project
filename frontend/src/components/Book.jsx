@@ -1,18 +1,42 @@
-const Book = ({ title, author, year, isbn, handleDelete }) => {
-  return (
-    <div
-      style={{
-        border: "1px solid black",
-        padding: "10px",
-        marginBottom: "10px",
-      }}
-    >
-      <h3>{title}</h3>
-      <p>{author}</p>
-      <p>{year}</p>
-      <p>{isbn}</p>
-      <button onClick={() => handleDelete(isbn)}>Delete</button>
-    </div>
+import { useState } from "react";
+import BookDisplay from "./BookDisplay";
+import BookEdit from "./BookEdit";
+
+const Book = ({
+  id,
+  title,
+  author,
+  year,
+  isbn,
+  handleDelete,
+  handleUpdate,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  return isEditing ? (
+    <BookEdit
+      id={id}
+      title={title}
+      author={author}
+      year={year}
+      isbn={isbn}
+      handleEditing={handleEditing}
+      handleUpdate={handleUpdate}
+    />
+  ) : (
+    <BookDisplay
+      id={id}
+      title={title}
+      author={author}
+      year={year}
+      isbn={isbn}
+      handleEditing={handleEditing}
+      handleDelete={handleDelete}
+    />
   );
 };
 
