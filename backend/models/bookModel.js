@@ -2,14 +2,18 @@ const books = require("../data/dummyBookData");
 
 let nextBookId = books.length + 1;
 
-function addBook(newBook) {
+function addBook(newBook, userId) {
   const existingBook = books.find((book) => book.isbn === newBook.isbn);
   if (existingBook) {
-    throw new Error("ISBN already exists");
+    if (!existingBook.ownedByUser.includes(userId)) {
+      existingBook.ownedByUser.push(userId);
+    }
+  } else {
+    newBook.id = nextBookId++;
+    newBook.isbn = removeIsbnHyphens(newBook.isbn);
+    newBook.ownedByUser = [userId];
+    books.push(newBook);
   }
-  newBook.id = nextBookId++;
-  newBook.isbn = removeIsbnHyphens(newBook.isbn);
-  books.push(newBook);
 }
 
 function deleteBook(id) {

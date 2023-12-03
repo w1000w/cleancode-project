@@ -12,7 +12,13 @@ const getAllBooks = (req, res) => {
 const addBook = (req, res) => {
   try {
     const book = req.body;
-    books.addBook(book);
+    if (!book.isbn || !book.title || !book.author) {
+      return res
+        .status(400)
+        .json({ message: "ISBN, title, and author missing" });
+    }
+    const userId = req.user.id;
+    books.addBook(book, userId);
     res.status(201).json(book);
   } catch (error) {
     res.status(409).json({ error });

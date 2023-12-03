@@ -5,7 +5,7 @@ const { authJwtAccess } = require("../middleware/authMiddleware");
 
 router.get("/", bookController.getAllBooks);
 
-router.post("/", bookController.addBook);
+router.post("/", authJwtAccess, bookController.addBook);
 
 router.delete("/:id", bookController.deleteBook);
 
