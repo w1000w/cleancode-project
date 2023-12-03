@@ -33,11 +33,19 @@ function updateBook(id, newBook) {
   return books[index];
 }
 
+function getBooksOwnedBy(userId) {
+  const booksOwnedByUser = books
+    .filter((book) => book.ownedByUser.includes(userId))
+    .map(({ ownedByUser, ...rest }) => rest);
+  return booksOwnedByUser;
+}
+
 module.exports = {
   addBook,
   deleteBook,
   getAllBooks,
   updateBook,
+  getBooksOwnedBy,
 };
 
 function removeIsbnHyphens(isbn) {

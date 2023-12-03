@@ -10,10 +10,9 @@ require("./utils/passport-config");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
 
 app.use(morgan("tiny"));
-
-app.use(passport.initialize());
 
 app.use("/api/books", bookRouter);
 

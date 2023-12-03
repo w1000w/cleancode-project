@@ -40,9 +40,20 @@ const updateBook = (req, res) => {
   }
 };
 
+const getBooksOwnedByUser = (req, res) => {
+  try {
+    const userId = req.user.id;
+    const booksOwnedByUser = books.getBooksOwnedBy(userId);
+    res.status(200).json(booksOwnedByUser);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 module.exports = {
   getAllBooks,
   addBook,
   deleteBook,
   updateBook,
+  getBooksOwnedByUser,
 };

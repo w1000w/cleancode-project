@@ -10,11 +10,12 @@ const accessTokenStrategy = new JwtStrategy(
     secretOrKey: JWT_SECRET,
   },
   (payload, done) => {
-    const user = users.findUser(payload.id);
+    const user = users.findUserById(payload.id);
     if (user) {
       return done(null, user);
     }
     return done(null, false);
   }
 );
+
 passport.use("jwt-access", accessTokenStrategy);

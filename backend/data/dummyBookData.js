@@ -5,6 +5,7 @@ const books = [
     author: "F. Scott Fitzgerald",
     year: 1925,
     isbn: "9783161484100",
+    ownedByUser: [1, 2, 3],
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const books = [
     author: "Harper Lee",
     year: 1960,
     isbn: "9783161484101",
+    ownedByUser: [1, 2],
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const books = [
     author: "George Orwell",
     year: 1949,
     isbn: "9783161484102",
+    ownedByUser: [1, 3],
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ const books = [
     author: "Jane Austen",
     year: 1813,
     isbn: "9783161484103",
+    ownedByUser: [2, 3],
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ const books = [
     author: "J.D. Salinger",
     year: 1951,
     isbn: "9783161484104",
+    ownedByUser: [1],
   },
 ];
 
