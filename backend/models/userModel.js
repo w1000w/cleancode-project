@@ -12,8 +12,8 @@ function addUser(newUser) {
   users.push(newUser);
 }
 
-function findUser(username) {
-  return users.find((user) => user.username === username);
+function findUser(id) {
+  return users.find((user) => user.id === id);
 }
 
 module.exports = { addUser, findUser };
