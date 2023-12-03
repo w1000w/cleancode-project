@@ -2,7 +2,7 @@ const users = require("../data/dummyUserData");
 
 let nextUserId = users.length + 1;
 
-function addUser(newUser) {
+const addUser = (newUser) => {
   console.log(newUser);
   const existingUser = users.find((user) => user.username === newUser.username);
   if (existingUser) {
@@ -10,10 +10,10 @@ function addUser(newUser) {
   }
   newUser.id = nextUserId++;
   users.push(newUser);
-}
+};
 
-function findUser(username) {
-  return users.find((user) => user.username === username);
-}
+const findUser = (username) => users.find((user) => user.username === username);
 
-module.exports = { addUser, findUser };
+const findUserById = (id) => users.find((user) => user.id === id);
+
+module.exports = { addUser, findUser, findUserById };
