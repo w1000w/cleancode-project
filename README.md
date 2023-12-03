@@ -16,6 +16,18 @@ Create an .env in both the root of backend and frontend folders with the followi
 PORT=3000
 ```
 
+In addition, add the following line to your backend .env
+
+```
+JWT_SECRET=
+```
+
+You can generate a key (JWT_SECRET) for jsonwebtoken by using the following command with Node.js installed:
+
+```
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
 Run the following command from separate terminals in both the frontend and the backend:
 
 ```
