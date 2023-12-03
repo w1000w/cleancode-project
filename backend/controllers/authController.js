@@ -11,8 +11,7 @@ const register = async (req, res) => {
         .status(400)
         .json({ message: "Username and password are required" });
     }
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(newUser.password, salt);
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
     users.addUser(newUser);
     res
